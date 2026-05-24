@@ -14,15 +14,15 @@ func main() {
 	fmt.Printf("Server running on %s:%d with timeout %s\n", server.Host, server.Port, server.Timeout)
 
 	//Builder pattern
-	pizza, err := NewPizzaBuilder().
-		SetDough("stuffed crust").
-		SetSauce("marinara").
-		SetSize("Large").
+	server1, err := NewServerBuilder().
+		SetHost("example.com").
+		SetPort(6000).
+		SetTimeout(60 * time.Second).
 		Build()
 
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
-	fmt.Printf("Pizza order: %+v\n", pizza)
+	fmt.Printf("Server running on %s:%d with timeout %s\n", server1.Host, server1.Port, server1.Timeout)
 }

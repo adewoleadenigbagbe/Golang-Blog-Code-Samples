@@ -2,41 +2,35 @@ package main
 
 import (
 	"errors"
+	"time"
 )
 
-// Product represents the complex object
-type Pizza struct {
-	Dough string
-	Sauce string
-	Size  string
+type ServerBuilder struct {
+	server Server
 }
 
-type PizzaBuilder struct {
-	pizza Pizza
+func NewServerBuilder() *ServerBuilder {
+	return &ServerBuilder{}
 }
 
-func NewPizzaBuilder() *PizzaBuilder {
-	return &PizzaBuilder{}
+func (sb *ServerBuilder) SetHost(host string) *ServerBuilder {
+	sb.server.Host = host
+	return sb
 }
 
-func (pb *PizzaBuilder) SetDough(dough string) *PizzaBuilder {
-	pb.pizza.Dough = dough
-	return pb
+func (sb *ServerBuilder) SetPort(port int) *ServerBuilder {
+	sb.server.Port = port
+	return sb
 }
 
-func (pb *PizzaBuilder) SetSauce(sauce string) *PizzaBuilder {
-	pb.pizza.Sauce = sauce
-	return pb
+func (sb *ServerBuilder) SetTimeout(timeout time.Duration) *ServerBuilder {
+	sb.server.Timeout = timeout
+	return sb
 }
 
-func (pb *PizzaBuilder) SetSize(size string) *PizzaBuilder {
-	pb.pizza.Size = size
-	return pb
-}
-
-func (pb *PizzaBuilder) Build() (Pizza, error) {
-	if pb.pizza.Size == "" {
-		return Pizza{}, errors.New("size is required")
+func (sb *ServerBuilder) Build() (Server, error) {
+	if sb.server.Host == "" {
+		return Server{}, errors.New("host is required")
 	}
-	return pb.pizza, nil
+	return sb.server, nil
 }
